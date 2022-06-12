@@ -20,6 +20,8 @@ const CollectionDetail = () => {
     }
   }, [collectionData]);
 
+  console.log({ dataCD: data });
+
   return (
     <div>
       <CenteredItem>
@@ -27,7 +29,7 @@ const CollectionDetail = () => {
       </CenteredItem>
       <hr />
       <br />
-      {data ? (
+      {data && data.posts.length !== 0 ? (
         <List>
           {data.posts.map((item) => {
             return (

@@ -9,7 +9,7 @@ const Input = (props) => {
   return (
     <div
       css={css`
-        padding: 0 0 2rem 2rem;
+        padding: 0rem 2rem 1rem 2rem;
         display: flex;
         flex-direction: column;
       `}

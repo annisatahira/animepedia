@@ -32,8 +32,6 @@ const ListCollection = (props) => {
   const { open, setOpen, setopenAddToCollection, data } = props;
 
   const handleSelectedCollection = (e) => {
-    console.log({ e });
-
     const selectedCollectionIndex = collectionData.findIndex(
       (item) => item.id === e.target.value
     );
@@ -74,8 +72,7 @@ const ListCollection = (props) => {
         <ul
           css={css`
             max-height: 260px;
-            overflow: hidden;
-            overflow-y: scroll;
+            overflow: auto;
             padding-left: 0;
           `}
         >

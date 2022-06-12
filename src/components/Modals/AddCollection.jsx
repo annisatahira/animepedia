@@ -2,6 +2,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import React from "react";
+import PropTypes from "prop-types";
 import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
 import Modal from "react-modal";
@@ -40,18 +41,24 @@ const AddCollection = (props) => {
 
     const newData = {
       name: formValues.name,
-      posts: [data]
+      posts: Object.keys(data).length > 0 ? [data] : []
     };
+
+    console.log({ dataModal: Object.keys(data).length });
 
     const formatData = addNewCollection(newData);
 
     setCollectionData([...collectionData, { ...formatData }]);
 
     setOpen(false);
-    setOpenModalCollection(false);
+
     setFormValues({});
 
-    return toast.success("Hooray! It Saved, Look at 'My Collection' Now !", {
+    if (setOpenModalCollection) {
+      setOpenModalCollection(false);
+    }
+
+    return toast.success("Hooray! It Saved", {
       position: toast.POSITION.TOP_CENTER
     });
   };
@@ -63,6 +70,8 @@ const AddCollection = (props) => {
       [name]: value
     }));
   };
+
+  console.log({ setOpenModalCollection });
 
   return (
     <>
@@ -92,12 +101,14 @@ const AddCollection = (props) => {
             justify-content: center;
           `}
         >
-          <PostCard
-            image={data?.coverImage.large}
-            title={data?.title.romaji}
-            score={data?.averageScore}
-            episodes={data?.episodes}
-          />
+          {data && Object.keys(data).length !== 0 && (
+            <PostCard
+              image={data?.coverImage.large}
+              title={data?.title.romaji}
+              score={data?.averageScore}
+              episodes={data?.episodes}
+            />
+          )}
 
           <StyledForm onSubmit={handleOnSubmit}>
             <Input
@@ -124,6 +135,20 @@ const AddCollection = (props) => {
       <ToastContainer autoClose={8000} />
     </>
   );
+};
+
+AddCollection.propTypes = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+  data: PropTypes.object,
+  setOpenModalCollection: PropTypes.func
+};
+
+AddCollection.defaultProps = {
+  open: false,
+  setOpen: null,
+  data: {},
+  setOpenModalCollection: null
 };
 
 export default AddCollection;
