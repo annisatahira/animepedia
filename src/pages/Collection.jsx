@@ -13,10 +13,32 @@ import { CenteredItem } from "../parts/container";
 import { Image } from "../parts/image";
 import { LargeList } from "../parts/list";
 import AddCollection from "../components/Modals/AddCollection";
+import RemoveData from "../components/Modals/RemoveData";
 
 const Collection = () => {
   const collectionData = useContext(CollectionContext).collectionData;
   const [openModalAddCollection, setOpenModalAddCollection] = useState(false);
+  const [openModalRemoveCollection, setOpenModalRemoveCollection] =
+    useState(false);
+
+  // state for save removed data
+  const [removedData, setRemovedData] = useState(null);
+
+  // state for save new data
+  const [data, setData] = useState(null);
+
+  const handleRemoveCollection = (e) => {
+    const removedData = collectionData.filter(
+      (item) => item.id === e.target.value
+    );
+    const notRemovedData = collectionData.filter(
+      (item) => item.id !== e.target.value
+    );
+
+    setData(notRemovedData);
+    setRemovedData(removedData[0]);
+    setOpenModalRemoveCollection(true);
+  };
 
   return (
     <>
@@ -42,37 +64,53 @@ const Collection = () => {
           <LargeList>
             {collectionData?.map((item) => {
               return (
-                <Link key={item.id} to={`/collection/${item.slug}`}>
+                <div key={item.id}>
                   <Card
                     css={css`
                       width: 300px;
                       height: 200px;
-                      overflow: hidden;
                       background: #ddd;
+                      position: relative:
                     `}
                   >
-                    <Image
+                    <Button
+                      variant="danger"
+                      shape="circle"
                       css={css`
-                        height: 150px;
+                        position: absolute;
+                        right: -1rem;
+                        top: -1rem;
                       `}
-                      src={
-                        item.posts.length > 0
-                          ? item.posts[0].coverImage?.large
-                          : ""
-                      }
-                      alt=""
-                    />
-                    <h1
-                      css={css`
-                        font-size: 18px;
-                        padding-left: 18px;
-                        color: #000;
-                      `}
+                      value={item.id}
+                      onClick={handleRemoveCollection}
                     >
-                      {item.name}
-                    </h1>
+                      X
+                    </Button>
+                    <Link key={item.id} to={`/collection/${item.slug}`}>
+                      <Image
+                        css={css`
+                          height: 150px;
+                          border-radius: 10px;
+                        `}
+                        src={
+                          item.posts.length > 0
+                            ? item.posts[0].coverImage?.large
+                            : ""
+                        }
+                        alt=""
+                      />
+                      <h1
+                        css={css`
+                          font-size: 18px;
+                          padding-left: 18px;
+                          color: #000;
+                        `}
+                      >
+                        {item.name}
+                      </h1>
+                    </Link>
                   </Card>
-                </Link>
+                </div>
               );
             })}
           </LargeList>
@@ -83,6 +121,17 @@ const Collection = () => {
       <AddCollection
         open={openModalAddCollection}
         setOpen={setOpenModalAddCollection}
+      />
+      <RemoveData
+        open={openModalRemoveCollection}
+        setOpen={setOpenModalRemoveCollection}
+        data={data}
+        image={
+          removedData?.posts?.length > 0
+            ? removedData?.posts[0].coverImage?.large
+            : ""
+        }
+        title={removedData ? `${removedData?.name} Collection` : {}}
       />
     </>
   );

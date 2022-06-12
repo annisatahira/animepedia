@@ -15,4 +15,5 @@ export const Button = styled.button`
         padding: 10px 18px;`
       : " border-radius: 8px"};
   ${(props) => props.variant === "danger" && "background-color: red;"};
+  ${(props) => props.variant === "secondary" && "background-color: gray;"};
 `;

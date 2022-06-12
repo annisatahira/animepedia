@@ -44,8 +44,6 @@ const AddCollection = (props) => {
       posts: Object.keys(data).length > 0 ? [data] : []
     };
 
-    console.log({ dataModal: Object.keys(data).length });
-
     const formatData = addNewCollection(newData);
 
     setCollectionData([...collectionData, { ...formatData }]);
@@ -70,8 +68,6 @@ const AddCollection = (props) => {
       [name]: value
     }));
   };
-
-  console.log({ setOpenModalCollection });
 
   return (
     <>
