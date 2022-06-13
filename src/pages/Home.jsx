@@ -109,11 +109,7 @@ const Home = () => {
         >
           <Heading
             css={css`
-              margin: 0;
-              padding-top: 1rem;
-              ${mq[1]} {
-                font-size: 2.5rem;
-              }
+              font-size: 1.5rem;
             `}
           >
             Hello, Anime Lover
@@ -123,18 +119,25 @@ const Home = () => {
             collection
           </p>
         </Card>
+        <Heading>Anime</Heading>
         {!loading && (
           <>
             <List>
               {list?.map((anime) => (
-                <Link key={anime.id} to={`/anime/${anime.id}`}>
-                  <PostCard
-                    title={anime.title.romaji}
-                    image={anime.coverImage.large}
-                    score={anime.averageScore}
-                    episodes={anime.episodes}
-                  />
-                </Link>
+                <div
+                  css={css`
+                    width: 100%;
+                  `}
+                >
+                  <Link key={anime.id} to={`/anime/${anime.id}`}>
+                    <PostCard
+                      title={anime.title.romaji}
+                      image={anime.coverImage.large}
+                      score={anime.averageScore}
+                      episodes={anime.episodes}
+                    />
+                  </Link>
+                </div>
               ))}
             </List>
           </>

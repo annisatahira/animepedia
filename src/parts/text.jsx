@@ -1,4 +1,7 @@
 import styled from "@emotion/styled";
+import { breakPointMediaQuery } from "../utils/helpers";
+
+const mq = breakPointMediaQuery();
 
 export const TextFormStatus = styled.p`
   padding-left: 1rem;
@@ -7,5 +10,8 @@ export const TextFormStatus = styled.p`
 `;
 
 export const Heading = styled.h1`
-  font-size: 1.5rem;
+  font-size: 2.5rem;
+  ${mq[1]} {
+    font-size: 3.5rem;
+  }
 `;

@@ -11,9 +11,11 @@ import { useQuery, gql } from "@apollo/client";
 import { useEffect } from "react";
 import PostCard from "../components/PostCard";
 import { List } from "../parts/list";
-import { goToTopPage } from "../utils/helpers";
+import { breakPointMediaQuery, goToTopPage } from "../utils/helpers";
 import ListCollection from "../components/Modals/ListCollection";
 import UpdateCollection from "../components/Modals/UpdateCollection";
+import { Layout } from "../parts/container";
+import { Heading } from "../parts/text";
 
 const ANIME_DETAIL_QUERY = gql`
   query ($id: Int) {
@@ -52,6 +54,7 @@ const ANIME_DETAIL_QUERY = gql`
 
 const PostDetail = () => {
   const param = useParams();
+  const mq = breakPointMediaQuery();
 
   const { data, loading, error } = useQuery(ANIME_DETAIL_QUERY, {
     variables: {
@@ -73,7 +76,7 @@ const PostDetail = () => {
   }, [data]);
 
   return (
-    <div>
+    <Layout>
       <CardHeader>
         <Image
           css={css`
@@ -88,12 +91,20 @@ const PostDetail = () => {
       <div
         css={css`
           display: flex;
+          flex-direction: column;
+
+          ${mq[1]} {
+            flex-direction: row;
+          }
         `}
       >
         <div
           css={css`
-            margin-top: -6rem;
-            margin-left: 4rem;
+            margin: -6rem 4rem 2rem 4rem;
+
+            ${mq[1]} {
+              margin-left: 4rem;
+            }
           `}
         >
           <PostCard
@@ -105,27 +116,20 @@ const PostDetail = () => {
         </div>
         <div
           css={css`
-            margin-left: 4rem;
-            width: 60%;
+            ${mq[1]} {
+              margin-left: 4rem;
+              width: 60%;
+            }
           `}
         >
-          <h1
-            css={css`
-              font-size: 2.5rem;
-            `}
-          >
-            {detail?.title.romaji}
-          </h1>
+          <Heading>{detail?.title.romaji}</Heading>
           <div
             css={css`
               display: flex;
+              flex-direction: column;
             `}
           >
-            <h2
-              css={css`
-                padding-right: 2rem;
-              `}
-            >
+            <h2 css={css``}>
               Genre:{" "}
               {detail?.genres.map((genre, index) => {
                 return (
@@ -141,7 +145,7 @@ const PostDetail = () => {
           <div
             css={css`
               margin-bottom: 3rem;
-              width: 80%;
+              width: 100%;
             `}
             dangerouslySetInnerHTML={{
               __html: detail?.description.replaceAll("<br>", "<br/>")
@@ -160,6 +164,7 @@ const PostDetail = () => {
                   key={index}
                   css={css`
                     background: #ddd;
+                    width: 100%;
                   `}
                 >
                   <Image
@@ -198,7 +203,7 @@ const PostDetail = () => {
         data={detail}
         setOpenModalCollection={setOpenModalCollection}
       />
-    </div>
+    </Layout>
   );
 };
 
