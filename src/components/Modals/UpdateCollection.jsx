@@ -5,14 +5,13 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
-import Modal from "react-modal";
 import { useContext, useState } from "react";
 import { StyledForm } from "../../parts/form";
 import PostCard from "../PostCard";
 import CollectionContext from "../../context/collection";
 import Input from "../Input";
 import { addNewCollection } from "../../utils/handler";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { breakPointMediaQuery, haveSpecialChar } from "../../utils/helpers";
 import { TextFormStatus } from "../../parts/text";
 import { nanoid } from "nanoid";
@@ -111,8 +110,11 @@ const UpdateCollection = (props) => {
         setOpenModalCollection(false);
       }
 
-      return toast.success("Hooray! It Saved", {
-        position: toast.POSITION.TOP_CENTER
+      console.log("hi");
+
+      toast.success("Hooray! It Updated", {
+        position: toast.POSITION.TOP_CENTER,
+        toastId: "success1"
       });
     }
   };
@@ -199,7 +201,6 @@ const UpdateCollection = (props) => {
           </StyledForm>
         </div>
       </ModalContainer>
-      <ToastContainer autoClose={8000} />
     </>
   );
 };

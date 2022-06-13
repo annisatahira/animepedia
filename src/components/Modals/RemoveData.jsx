@@ -5,10 +5,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
-import Modal from "react-modal";
 import { useContext } from "react";
 import CollectionContext from "../../context/collection";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Card } from "../../parts/card";
 import { Image } from "../../parts/image";
 import { CenteredItem } from "../../parts/container";
@@ -64,7 +63,6 @@ const RemoveData = (props) => {
           </div>
         </CenteredItem>
       </ModalContainer>
-      <ToastContainer autoClose={8000} />
     </>
   );
 };

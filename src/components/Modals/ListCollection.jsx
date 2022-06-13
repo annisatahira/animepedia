@@ -8,7 +8,7 @@ import { IoImagesOutline } from "react-icons/io5";
 import ModalContainer from "./Container";
 import CollectionContext from "../../context/collection";
 import { useContext } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 import EmptyPage from "../EmptyPage";
 
@@ -135,7 +135,6 @@ const ListCollection = (props) => {
           + Add New Collection
         </Button>
       </ModalContainer>
-      <ToastContainer autoClose={8000} />
     </>
   );
 };

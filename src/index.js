@@ -9,6 +9,7 @@ import { GlobalStyles } from "./parts/globals";
 import AppRoutes from "./routes";
 import { CollectionProvider } from "./context/collection";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -21,6 +22,8 @@ root.render(
         </ApolloProvider>
       </CollectionProvider>
     </BrowserRouter>
+
+    <ToastContainer autoClose={8000} />
   </React.StrictMode>
 );
 

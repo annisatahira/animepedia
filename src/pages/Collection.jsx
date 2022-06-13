@@ -172,9 +172,9 @@ const Collection = () => {
                       src={
                         item.posts.length > 0
                           ? item.posts[0].coverImage?.large
-                          : ""
+                          : "/images/empty-collection.png"
                       }
-                      alt=""
+                      alt={item.name}
                     />
                     <h1
                       css={css`
