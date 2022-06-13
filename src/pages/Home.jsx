@@ -124,20 +124,14 @@ const Home = () => {
           <>
             <List>
               {list?.map((anime) => (
-                <div
-                  css={css`
-                    width: 100%;
-                  `}
-                >
-                  <Link key={anime.id} to={`/anime/${anime.id}`}>
-                    <PostCard
-                      title={anime.title.romaji}
-                      image={anime.coverImage.large}
-                      score={anime.averageScore}
-                      episodes={anime.episodes}
-                    />
-                  </Link>
-                </div>
+                <Link key={anime.id} to={`/anime/${anime.id}`}>
+                  <PostCard
+                    title={anime.title.romaji}
+                    image={anime.coverImage.large}
+                    score={anime.averageScore}
+                    episodes={anime.episodes}
+                  />
+                </Link>
               ))}
             </List>
           </>

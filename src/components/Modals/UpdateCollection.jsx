@@ -16,22 +16,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { haveSpecialChar } from "../../utils/helpers";
 import { TextFormStatus } from "../../parts/text";
 import { nanoid } from "nanoid";
-
-const customStyles = {
-  overlay: {
-    background: "rgba(0, 0, 0, 0.8)"
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    width: "50%",
-    padding: "2rem"
-  }
-};
+import ModalContainer from "./Container";
 
 const UpdateCollection = (props) => {
   const { open, setOpen, data, setOpenModalCollection, editedData, variant } =
@@ -103,7 +88,6 @@ const UpdateCollection = (props) => {
           ...data
         };
 
-        console.log({ postData });
         const newData = {
           name: formValues.name,
           posts: Object.keys(data).length > 0 ? [postData] : []
@@ -134,12 +118,11 @@ const UpdateCollection = (props) => {
 
   return (
     <>
-      <Modal
+      <ModalContainer
         isOpen={open}
         contentLabel={
           variant === "edit" ? "Edit Collection" : "Add to Collection"
         }
-        style={customStyles}
       >
         <Button
           variant="danger"
@@ -157,11 +140,12 @@ const UpdateCollection = (props) => {
         <p>
           {variant === "edit"
             ? "Edit this collection name"
-            : "this anime to new collection"}
+            : "Create new collection and save this anime to that collection"}
         </p>
         <div
           css={css`
             display: flex;
+            flex-direction: column;
             width: 100%;
             justify-content: center;
           `}
@@ -175,7 +159,12 @@ const UpdateCollection = (props) => {
             />
           )}
 
-          <StyledForm onSubmit={handleOnSubmit}>
+          <StyledForm
+            css={css`
+              margin-top: 2rem;
+            `}
+            onSubmit={handleOnSubmit}
+          >
             <Input
               label="Name"
               aria-label="name"
@@ -197,14 +186,14 @@ const UpdateCollection = (props) => {
               css={css`
                 display: flex;
                 width: 100%;
-                justify-content: right;
+                justify-content: center;
               `}
             >
               <Button>Save</Button>
             </div>
           </StyledForm>
         </div>
-      </Modal>
+      </ModalContainer>
       <ToastContainer autoClose={8000} />
     </>
   );

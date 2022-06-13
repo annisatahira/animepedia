@@ -12,22 +12,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Card } from "../../parts/card";
 import { Image } from "../../parts/image";
 import { CenteredItem } from "../../parts/container";
-
-const customStyles = {
-  overlay: {
-    background: "rgba(0, 0, 0, 0.8)"
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    width: "50%",
-    padding: "2rem"
-  }
-};
+import ModalContainer from "./Container";
 
 const RemoveData = (props) => {
   const { open, setOpen, image, title, data } = props;
@@ -45,7 +30,7 @@ const RemoveData = (props) => {
 
   return (
     <>
-      <Modal isOpen={open} contentLabel="Remove Data" style={customStyles}>
+      <ModalContainer isOpen={open} contentLabel="Remove Data">
         <CenteredItem>
           <Card
             css={css`
@@ -78,7 +63,7 @@ const RemoveData = (props) => {
             </Button>
           </div>
         </CenteredItem>
-      </Modal>
+      </ModalContainer>
       <ToastContainer autoClose={8000} />
     </>
   );
