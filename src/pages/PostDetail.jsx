@@ -117,16 +117,28 @@ const PostDetail = () => {
         <div
           css={css`
             ${mq[1]} {
-              margin-left: 4rem;
               width: 60%;
             }
           `}
         >
-          <Heading>{detail?.title.romaji}</Heading>
+          <Heading
+            css={css`
+              ${mq[1]} {
+                margin-bottom: 0;
+              }
+            `}
+          >
+            {detail?.title.romaji}
+          </Heading>
           <div
             css={css`
               display: flex;
               flex-direction: column;
+
+              ${mq[1]} {
+                flex-direction: row;
+                justify-content: space-between;
+              }
             `}
           >
             <h2 css={css``}>
