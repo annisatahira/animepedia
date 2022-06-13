@@ -5,26 +5,12 @@ import React from "react";
 import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
 import { IoImagesOutline } from "react-icons/io5";
-import Modal from "react-modal";
+import ModalContainer from "./Container";
 import CollectionContext from "../../context/collection";
 import { useContext } from "react";
-import { toast, ToastContainer } from "react-toastify";
-
-const customStyles = {
-  overlay: {
-    background: "rgba(0, 0, 0, 0.8)"
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    width: "50%",
-    padding: "2rem"
-  }
-};
+import { toast } from "react-toastify";
+import { nanoid } from "nanoid";
+import EmptyPage from "../EmptyPage";
 
 const ListCollection = (props) => {
   const collectionData = useContext(CollectionContext).collectionData;
@@ -36,7 +22,12 @@ const ListCollection = (props) => {
       (item) => item.id === e.target.value
     );
 
-    collectionData[selectedCollectionIndex].posts.push(data);
+    const postData = {
+      ids: nanoid(16),
+      ...data
+    };
+
+    collectionData[selectedCollectionIndex].posts.push(postData);
     setCollectionData([...collectionData]);
 
     setOpen(false);
@@ -47,7 +38,7 @@ const ListCollection = (props) => {
   };
   return (
     <>
-      <Modal isOpen={open} contentLabel="Collection List" style={customStyles}>
+      <ModalContainer isOpen={open} contentLabel="Collection List">
         <Button
           variant="danger"
           shape="circle"
@@ -129,10 +120,10 @@ const ListCollection = (props) => {
               );
             })
           ) : (
-            <div>
-              <h1>You are not have any collection yet</h1>
-              <p>Click "add add new collection" to create a new one</p>
-            </div>
+            <EmptyPage
+              title="You don't have a collection yet"
+              subtitle='Click "add add new collection" to create a new one'
+            />
           )}
         </ul>
         <Button
@@ -143,8 +134,7 @@ const ListCollection = (props) => {
         >
           + Add New Collection
         </Button>
-      </Modal>
-      <ToastContainer autoClose={8000} />
+      </ModalContainer>
     </>
   );
 };

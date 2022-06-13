@@ -5,7 +5,7 @@ export const StyledPaginateContainer = styled.div`
     list-style-type: none;
     display: flex;
     justify-content: center;
-    padding: 5rem;
+    padding: 5rem 3rem;
   }
 
   li {
@@ -21,7 +21,7 @@ export const StyledPaginateContainer = styled.div`
     background: #fff;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
       rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    color: #000;
+    color: rgb(47, 90, 148);
   }
 
   a {
@@ -36,7 +36,7 @@ export const StyledPaginateContainer = styled.div`
   li.previous,
   li.next,
   li.selected {
-    background: #000;
+    background: #1b4173;
     color: #fff;
   }
 

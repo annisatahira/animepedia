@@ -3,7 +3,7 @@ import { jsx, css, Global } from "@emotion/react";
 export const GlobalStyles = () => (
   <Global
     styles={css`
-      @import url("https://fonts.googleapis.com/css2?family=Lobster&family=Poppins&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Poppins&family=Fascinate&display=swap");
 
       * {
         box-sizing: border-box;
@@ -17,25 +17,29 @@ export const GlobalStyles = () => (
         min-height: 100%;
         padding: 0;
         margin: 0;
+        font-size: 12px;
+        position: relative;
       }
 
       #root {
-        font-size: 14px;
-        background: rgb(119, 119, 119);
-        background: linear-gradient(
-          0deg,
-          rgba(119, 119, 119, 1) 1%,
-          rgba(255, 255, 255, 1) 66%
-        );
+        background: #fff;
         min-height: 100vh;
+        overflow: hidden;
       }
 
       a {
         text-decoration: none;
+        width: 100%;
       }
 
       ul {
         list-style-type: none;
+      }
+
+      main {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 5rem;
       }
     `}
   />

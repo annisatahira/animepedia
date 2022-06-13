@@ -5,33 +5,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
-import Modal from "react-modal";
-import { useContext, useState } from "react";
-import { StyledForm } from "../../parts/form";
-import PostCard from "../PostCard";
+import { useContext } from "react";
 import CollectionContext from "../../context/collection";
-import Input from "../Input";
-import { addNewCollection } from "../../utils/handler";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Card } from "../../parts/card";
 import { Image } from "../../parts/image";
 import { CenteredItem } from "../../parts/container";
-
-const customStyles = {
-  overlay: {
-    background: "rgba(0, 0, 0, 0.8)"
-  },
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    width: "50%",
-    padding: "2rem"
-  }
-};
+import ModalContainer from "./Container";
 
 const RemoveData = (props) => {
   const { open, setOpen, image, title, data } = props;
@@ -49,7 +29,7 @@ const RemoveData = (props) => {
 
   return (
     <>
-      <Modal isOpen={open} contentLabel="Remove Data" style={customStyles}>
+      <ModalContainer isOpen={open} contentLabel="Remove Data">
         <CenteredItem>
           <Card
             css={css`
@@ -82,8 +62,7 @@ const RemoveData = (props) => {
             </Button>
           </div>
         </CenteredItem>
-      </Modal>
-      <ToastContainer autoClose={8000} />
+      </ModalContainer>
     </>
   );
 };
@@ -91,14 +70,14 @@ const RemoveData = (props) => {
 RemoveData.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
-  data: PropTypes.object,
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   setOpenModalCollection: PropTypes.func
 };
 
 RemoveData.defaultProps = {
   open: false,
   setOpen: null,
-  data: {},
+  data: [],
   setOpenModalCollection: null
 };
 

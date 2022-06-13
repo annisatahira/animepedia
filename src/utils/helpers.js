@@ -10,3 +10,17 @@ export const convertToSlug = (sentence) => {
     .replace(/ /g, "-")
     .replace(/[^\w-]+/g, "");
 };
+
+export const haveSpecialChar = (sentence) => {
+  const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+  return format.test(sentence);
+};
+
+export const breakPointMediaQuery = () => {
+  const breakpoints = [500, 768, 992, 1200];
+
+  const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
+  return mq;
+};
