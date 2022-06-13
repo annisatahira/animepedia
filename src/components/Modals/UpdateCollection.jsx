@@ -13,12 +13,13 @@ import CollectionContext from "../../context/collection";
 import Input from "../Input";
 import { addNewCollection } from "../../utils/handler";
 import { toast, ToastContainer } from "react-toastify";
-import { haveSpecialChar } from "../../utils/helpers";
+import { breakPointMediaQuery, haveSpecialChar } from "../../utils/helpers";
 import { TextFormStatus } from "../../parts/text";
 import { nanoid } from "nanoid";
 import ModalContainer from "./Container";
 
 const UpdateCollection = (props) => {
+  const mq = breakPointMediaQuery();
   const { open, setOpen, data, setOpenModalCollection, editedData, variant } =
     props;
   const collectionData = useContext(CollectionContext).collectionData;
@@ -148,6 +149,10 @@ const UpdateCollection = (props) => {
             flex-direction: column;
             width: 100%;
             justify-content: center;
+
+            ${mq[2]} {
+              flex-direction: row;
+            }
           `}
         >
           {data && Object.keys(data).length !== 0 && (
