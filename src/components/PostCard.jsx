@@ -11,7 +11,7 @@ const PostCard = (props) => {
   return (
     <Card
       css={css`
-        width: 250px;
+        width: 100%;
         height: 300px;
       `}
     >
@@ -27,7 +27,7 @@ const PostCard = (props) => {
         css={css`
           position: absolute;
           padding: 10px;
-          bottom: -10px;
+          bottom: -1px;
           left: 0;
           right: 0;
           background-image: url("/images/bg-title.webp");

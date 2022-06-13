@@ -3,53 +3,90 @@
 /** @jsx jsx */
 import { Link } from "react-router-dom";
 import { jsx, css } from "@emotion/react";
-import { Button } from "../parts/button";
 import { FaHeart } from "react-icons/fa";
 import { Card } from "../parts/card";
+import { breakPointMediaQuery } from "../utils/helpers";
+import { Image } from "../parts/image";
+import { Layout } from "../parts/container";
 
 const Header = () => {
+  const mq = breakPointMediaQuery();
   return (
-    <div
+    <Layout
       css={css`
-        padding: 0 4rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        ${mq[0]} {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin: 0 auto;
+        }
       `}
     >
-      <Link to="/">
-        <h1
-          css={css`
-            font-size: 36px;
-            color: #000;
-          `}
-        >
-          Animepedia
-        </h1>
-      </Link>
-
-      <Link to="/collection">
-        <Card
-          css={css`
-            display: flex;
-            align-items: center;
-            flex-direction: row;
-            padding: 1rem 2rem;
-            background: #000;
-            color: #fff;
-          `}
-        >
-          <FaHeart />
-          <span
+      <div
+        css={css`
+          width: 250px;
+        `}
+      >
+        <Link to="/">
+          <Image
             css={css`
-              margin-left: 18px;
+              width: 250px;
+              margin-top: 1rem;
+            `}
+            src="/logo/animepedia.png"
+            alt="animepedia"
+          />
+        </Link>
+      </div>
+
+      <div
+        css={css`
+          width: 250px;
+        `}
+      >
+        <Link to="/collection">
+          <Card
+            css={css`
+              background: rgb(47, 90, 148);
+              color: #fff;
+              padding: 1.5rem;
+              position: fixed;
+              bottom: 1rem;
+              right: 1rem;
+              font-size: 24px;
+              z-index: 99;
+              border-radius: 50%;
+              ${mq[1]} {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                border-radius: 10px;
+                font-size: 1.5rem;
+                position: relative;
+                width: 200px;
+                bottom: unset;
+                right: unset;
+                float: right;
+                z-index: 0;
+              }
             `}
           >
-            My Collection
-          </span>
-        </Card>
-      </Link>
-    </div>
+            <FaHeart />
+            <span
+              css={css`
+                margin-left: 18px;
+                display: none;
+                ${mq[1]} {
+                  display: block;
+                }
+              `}
+            >
+              My Collection
+            </span>
+          </Card>
+        </Link>
+      </div>
+    </Layout>
   );
 };
 

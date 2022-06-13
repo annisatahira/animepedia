@@ -11,7 +11,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { StyledPaginateContainer } from "../parts/paginate";
-import { goToTopPage } from "../utils/helpers";
+import { breakPointMediaQuery, goToTopPage } from "../utils/helpers";
+import { Card } from "../parts/card";
+import { Layout } from "../parts/container";
+import { Heading } from "../parts/text";
+import { useMediaPredicate } from "react-media-hook";
 
 const ANIME_LIST_QUERY = gql`
   query animeList($ids: [Int], $page: Int, $perPage: Int) {
@@ -42,6 +46,8 @@ const ANIME_LIST_QUERY = gql`
 `;
 
 const Home = () => {
+  const mq = breakPointMediaQuery();
+  const biggerThan500 = useMediaPredicate("(min-width: 500px)");
   const [selectedPage, setSelectedPage] = useState(1);
   const { data, loading, error } = useQuery(ANIME_LIST_QUERY, {
     variables: {
@@ -55,13 +61,10 @@ const Home = () => {
   useEffect(() => {
     if (data) {
       const animeListData = data?.Page?.media;
-      const animeListPage = data?.Page?.pageInfo;
 
       setList(animeListData);
       setPageCount(data?.Page?.pageInfo.lastPage);
     }
-
-    console.log({ data });
   }, [data]);
 
   const handlePageClick = (event) => {
@@ -70,7 +73,7 @@ const Home = () => {
   };
 
   return (
-    <div
+    <Layout
       css={css`
         position: relative;
         width: 100%;
@@ -80,9 +83,46 @@ const Home = () => {
         css={css`
           margin-left: auto;
           margin-right: auto;
-          padding: 0 4rem;
         `}
       >
+        <Card
+          css={css`
+            color: #fff;
+            padding: 1rem;
+            background: rgb(47, 90, 148);
+            background: linear-gradient(
+              135deg,
+              rgba(47, 90, 148, 1) 0%,
+              rgba(11, 17, 32, 1) 99%
+            );
+            margin-bottom: 1rem;
+            line-height: 1.5rem;
+            ${mq[1]} {
+              padding: 2rem 3rem;
+              line-height: 2rem;
+              font-size: 1.25rem;
+            }
+            ${mq[2]} {
+              padding: 3rem 4rem;
+            }
+          `}
+        >
+          <Heading
+            css={css`
+              margin: 0;
+              padding-top: 1rem;
+              ${mq[1]} {
+                font-size: 2.5rem;
+              }
+            `}
+          >
+            Hello, Anime Lover
+          </Heading>
+          <p>
+            Discover anime and manga and save your favorite anime to your
+            collection
+          </p>
+        </Card>
         {!loading && (
           <>
             <List>
@@ -104,14 +144,15 @@ const Home = () => {
             previousLabel="Prev"
             breakLabel="..."
             nextLabel="Next"
-            pageRangeDisplayed={3}
             pageCount={pageCount}
             renderOnZeroPageCount={null}
             onPageChange={handlePageClick}
+            pageRangeDisplayed={biggerThan500 ? 4 : 1}
+            marginPagesDisplayed={biggerThan500 ? 1 : 0}
           />
         </StyledPaginateContainer>
       </div>
-    </div>
+    </Layout>
   );
 };
 
