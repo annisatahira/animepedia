@@ -16,6 +16,10 @@ const Footer = () => {
         );
         margin-top: 2rem;
         margin-bottom: 0;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 5rem;
       `}
     >
       <h1
@@ -23,8 +27,7 @@ const Footer = () => {
           font-size: 14px;
           text-align: center;
           color: white;
-          padding: 2rem;
-          margin: 0;
+          padding: 1rem;
         `}
       >
         build with Love

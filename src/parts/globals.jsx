@@ -18,6 +18,7 @@ export const GlobalStyles = () => (
         padding: 0;
         margin: 0;
         font-size: 12px;
+        position: relative;
       }
 
       #root {
@@ -38,6 +39,7 @@ export const GlobalStyles = () => (
       main {
         display: flex;
         justify-content: center;
+        padding-bottom: 5rem;
       }
     `}
   />
