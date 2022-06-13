@@ -17,8 +17,10 @@ import RemoveData from "../components/Modals/RemoveData";
 import { FiEdit2 } from "react-icons/fi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import EmptyPage from "../components/EmptyPage";
+import { breakPointMediaQuery } from "../utils/helpers";
 
 const Collection = () => {
+  const mq = breakPointMediaQuery();
   const collectionData = useContext(CollectionContext).collectionData;
   const [openModalAddCollection, setOpenModalAddCollection] = useState(false);
   const [openModalRemoveCollection, setOpenModalRemoveCollection] =
@@ -91,17 +93,48 @@ const Collection = () => {
           <LargeList>
             {collectionData?.map((item) => {
               return (
-                <div key={item.id}>
-                  <Card
+                <Card
+                  key={item.id}
+                  css={css`
+                    width: 100%;
+                    height: 200px;
+                    background: #ddd;
+
+                    ${mq[0]} {
+                      width: 150px;
+                    }
+
+                    ${mq[1]} {
+                      width: 230px;
+                    }
+                  `}
+                >
+                  <Button
+                    shape="circle"
                     css={css`
-                      width: 300px;
-                      height: 200px;
-                      background: #ddd;
-                      position: relative:
-                      display: block;
+                      position: absolute;
+                      right: -1rem;
+                      top: -1rem;
+                    `}
+                    value={item.id}
+                    onClick={handleOpenEditMenu}
+                  >
+                    <BsThreeDotsVertical
+                      css={css`
+                        font-size: 12px;
+                      `}
+                    />
+                  </Button>
+                  <div
+                    css={css`
+                      position: absolute;
+                      right: 0rem;
+                      top: 4rem;
+                      display: ${openEditMenu ? "block" : "none"};
                     `}
                   >
                     <Button
+                      variant="danger"
                       shape="circle"
                       css={css`
                         position: absolute;
@@ -109,77 +142,51 @@ const Collection = () => {
                         top: -1rem;
                       `}
                       value={item.id}
-                      onClick={handleOpenEditMenu}
+                      onClick={handleRemoveCollection}
                     >
-                      <BsThreeDotsVertical
+                      X
+                    </Button>
+                    <Button
+                      shape="circle"
+                      css={css`
+                        position: absolute;
+                        right: -1rem;
+                        top: 3rem;
+                      `}
+                      value={item.name}
+                      onClick={handleEditCollection}
+                    >
+                      <FiEdit2
                         css={css`
                           font-size: 12px;
                         `}
                       />
                     </Button>
-                    <div
+                  </div>
+                  <Link key={item.id} to={`/collection/${item.slug}`}>
+                    <Image
                       css={css`
-                        position: absolute;
-                        right: 0rem;
-                        top: 4rem;
-                        display: ${openEditMenu ? "block" : "none"};
+                        height: 150px;
+                        border-radius: 10px;
+                      `}
+                      src={
+                        item.posts.length > 0
+                          ? item.posts[0].coverImage?.large
+                          : ""
+                      }
+                      alt=""
+                    />
+                    <h1
+                      css={css`
+                        font-size: 18px;
+                        padding-left: 18px;
+                        color: #000;
                       `}
                     >
-                      <Button
-                        variant="danger"
-                        shape="circle"
-                        css={css`
-                          position: absolute;
-                          right: -1rem;
-                          top: -1rem;
-                        `}
-                        value={item.id}
-                        onClick={handleRemoveCollection}
-                      >
-                        X
-                      </Button>
-                      <Button
-                        shape="circle"
-                        css={css`
-                          position: absolute;
-                          right: -1rem;
-                          top: 3rem;
-                        `}
-                        value={item.name}
-                        onClick={handleEditCollection}
-                      >
-                        <FiEdit2
-                          css={css`
-                            font-size: 12px;
-                          `}
-                        />
-                      </Button>
-                    </div>
-                    <Link key={item.id} to={`/collection/${item.slug}`}>
-                      <Image
-                        css={css`
-                          height: 150px;
-                          border-radius: 10px;
-                        `}
-                        src={
-                          item.posts.length > 0
-                            ? item.posts[0].coverImage?.large
-                            : ""
-                        }
-                        alt=""
-                      />
-                      <h1
-                        css={css`
-                          font-size: 18px;
-                          padding-left: 18px;
-                          color: #000;
-                        `}
-                      >
-                        {item.name}
-                      </h1>
-                    </Link>
-                  </Card>
-                </div>
+                      {item.name}
+                    </h1>
+                  </Link>
+                </Card>
               );
             })}
           </LargeList>

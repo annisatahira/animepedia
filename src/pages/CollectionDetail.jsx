@@ -87,6 +87,9 @@ const CollectionDetail = () => {
         <Button onClick={handleEditCollection}>Edit Name Collection</Button>
       </CenteredItem>
       <br />
+      <br />
+      <hr />
+      <br />
       {detailData?.posts?.length !== 0 ? (
         <List>
           {detailData?.posts?.map((item) => {
