@@ -5,14 +5,12 @@ import React from "react";
 import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
 import { IoImagesOutline } from "react-icons/io5";
-import { TbMoodEmpty } from "react-icons/tb";
 import ModalContainer from "./Container";
 import CollectionContext from "../../context/collection";
 import { useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { nanoid } from "nanoid";
-import { Heading } from "../../parts/text";
-import { CenteredItem } from "../../parts/container";
+import EmptyPage from "../EmptyPage";
 
 const ListCollection = (props) => {
   const collectionData = useContext(CollectionContext).collectionData;
@@ -122,19 +120,10 @@ const ListCollection = (props) => {
               );
             })
           ) : (
-            <CenteredItem
-              css={css`
-                text-align: center;
-              `}
-            >
-              <TbMoodEmpty
-                css={css`
-                  font-size: 4rem;
-                `}
-              />
-              <h2>You don't have a collection yet</h2>
-              <span>Click "add add new collection" to create a new one</span>
-            </CenteredItem>
+            <EmptyPage
+              title="You don't have a collection yet"
+              subtitle='Click "add add new collection" to create a new one'
+            />
           )}
         </ul>
         <Button

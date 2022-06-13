@@ -9,8 +9,9 @@ import RemoveData from "../components/Modals/RemoveData";
 import PostCard from "../components/PostCard";
 import CollectionContext from "../context/collection";
 import { Button } from "../parts/button";
-import { CenteredItem } from "../parts/container";
+import { CenteredItem, Layout } from "../parts/container";
 import { List } from "../parts/list";
+import EmptyPage from "../components/EmptyPage";
 
 const CollectionDetail = () => {
   const param = useParams();
@@ -80,12 +81,11 @@ const CollectionDetail = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <CenteredItem>
         <h1>{detailData?.name}</h1>
         <Button onClick={handleEditCollection}>Edit Name Collection</Button>
       </CenteredItem>
-      <hr />
       <br />
       {detailData?.posts?.length !== 0 ? (
         <List>
@@ -95,7 +95,7 @@ const CollectionDetail = () => {
                 key={item.ids}
                 css={css`
                   position: relative;
-                  width: 250px;
+                  width: 100%;
                 `}
               >
                 <Link to={`/anime/${item.id}`}>
@@ -119,7 +119,10 @@ const CollectionDetail = () => {
           })}
         </List>
       ) : (
-        <h1>Tidak ada data</h1>
+        <EmptyPage
+          title="Opps! Collection is empty!"
+          subtitle="Add anime post that you like to this collection"
+        />
       )}
       <UpdateCollection
         variant="edit"
@@ -136,7 +139,7 @@ const CollectionDetail = () => {
           removedData?.coverImage?.large ? removedData?.coverImage?.large : ""
         }
       />
-    </div>
+    </Layout>
   );
 };
 
