@@ -35,7 +35,7 @@ const CollectionDetail = () => {
 
   const handleRemoveCollection = (e) => {
     const selectedData = detailData.posts.filter(
-      (item) => item.id === parseInt(e.target.value)
+      (item) => item.ids === e.target.value
     );
 
     // deep copy so actual state not changes
@@ -46,7 +46,7 @@ const CollectionDetail = () => {
     );
 
     const notRemovedPostData = allData[removedDataIndex].posts.filter(
-      (item) => item.id !== parseInt(e.target.value)
+      (item) => item.ids !== e.target.value
     );
 
     allData[removedDataIndex].posts = notRemovedPostData;
@@ -92,7 +92,7 @@ const CollectionDetail = () => {
           {detailData?.posts?.map((item) => {
             return (
               <div
-                key={item.id}
+                key={item.ids}
                 css={css`
                   position: relative;
                   width: 250px;
@@ -109,7 +109,7 @@ const CollectionDetail = () => {
                     right: -1rem;
                     top: -1rem;
                   `}
-                  value={item.id}
+                  value={item.ids}
                   onClick={handleRemoveCollection}
                 >
                   X

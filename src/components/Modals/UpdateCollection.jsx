@@ -15,6 +15,7 @@ import { addNewCollection } from "../../utils/handler";
 import { toast, ToastContainer } from "react-toastify";
 import { haveSpecialChar } from "../../utils/helpers";
 import { TextFormStatus } from "../../parts/text";
+import { nanoid } from "nanoid";
 
 const customStyles = {
   overlay: {
@@ -97,9 +98,15 @@ const UpdateCollection = (props) => {
         collectionData[selectedCollectionIdx].name = formValues.name;
         setCollectionData([...collectionData]);
       } else {
+        const postData = {
+          ids: nanoid(16),
+          ...data
+        };
+
+        console.log({ postData });
         const newData = {
           name: formValues.name,
-          posts: Object.keys(data).length > 0 ? [data] : []
+          posts: Object.keys(data).length > 0 ? [postData] : []
         };
 
         const formatData = addNewCollection(newData);

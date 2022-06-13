@@ -9,6 +9,7 @@ import Modal from "react-modal";
 import CollectionContext from "../../context/collection";
 import { useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import { nanoid } from "nanoid";
 
 const customStyles = {
   overlay: {
@@ -36,7 +37,12 @@ const ListCollection = (props) => {
       (item) => item.id === e.target.value
     );
 
-    collectionData[selectedCollectionIndex].posts.push(data);
+    const postData = {
+      ids: nanoid(16),
+      ...data
+    };
+
+    collectionData[selectedCollectionIndex].posts.push(postData);
     setCollectionData([...collectionData]);
 
     setOpen(false);
