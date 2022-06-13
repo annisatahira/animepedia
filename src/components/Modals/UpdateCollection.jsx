@@ -32,19 +32,11 @@ const customStyles = {
   }
 };
 
-const AddCollection = (props) => {
-  const { open, setOpen, data, setOpenModalCollection } = props;
+const UpdateCollection = (props) => {
+  const { open, setOpen, data, setOpenModalCollection, editedData, variant } =
+    props;
   const collectionData = useContext(CollectionContext).collectionData;
   const setCollectionData = useContext(CollectionContext).setCollectionData;
-
-  useEffect(() => {
-    setFormValues({
-      name: ""
-    });
-    setValidation({
-      name: ""
-    });
-  }, [open]);
 
   const [formValues, setFormValues] = useState({
     name: ""
@@ -52,6 +44,16 @@ const AddCollection = (props) => {
   const [validation, setValidation] = useState({
     name: ""
   });
+
+  useEffect(() => {
+    if (variant === "edit") {
+      const { name: newName } = editedData;
+      setFormValues({
+        ...formValues,
+        name: newName
+      });
+    }
+  }, [editedData]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -87,14 +89,23 @@ const AddCollection = (props) => {
     const validName = checkValidName(formValues.name);
 
     if (validName) {
-      const newData = {
-        name: formValues.name,
-        posts: Object.keys(data).length > 0 ? [data] : []
-      };
+      if (variant === "edit") {
+        const selectedCollectionIdx = collectionData.findIndex(
+          (item) => item.name === editedData.name
+        );
 
-      const formatData = addNewCollection(newData);
+        collectionData[selectedCollectionIdx].name = formValues.name;
+        setCollectionData([...collectionData]);
+      } else {
+        const newData = {
+          name: formValues.name,
+          posts: Object.keys(data).length > 0 ? [data] : []
+        };
 
-      setCollectionData([...collectionData, { ...formatData }]);
+        const formatData = addNewCollection(newData);
+
+        setCollectionData([...collectionData, { ...formatData }]);
+      }
 
       setOpen(false);
       setFormValues({
@@ -118,7 +129,9 @@ const AddCollection = (props) => {
     <>
       <Modal
         isOpen={open}
-        contentLabel="Add to Collection"
+        contentLabel={
+          variant === "edit" ? "Edit Collection" : "Add to Collection"
+        }
         style={customStyles}
       >
         <Button
@@ -133,8 +146,12 @@ const AddCollection = (props) => {
         >
           X
         </Button>
-        <h1>Create Collection</h1>
-        <p>Save this anime to new collection</p>
+        <h1>{variant === "edit" ? "Edit" : "Add to"} Collection</h1>
+        <p>
+          {variant === "edit"
+            ? "Edit this collection name"
+            : "this anime to new collection"}
+        </p>
         <div
           css={css`
             display: flex;
@@ -144,8 +161,8 @@ const AddCollection = (props) => {
         >
           {data && Object.keys(data).length !== 0 && (
             <PostCard
-              image={data?.coverImage.large}
-              title={data?.title.romaji}
+              image={data?.coverImage?.large}
+              title={data?.title?.romaji}
               score={data?.averageScore}
               episodes={data?.episodes}
             />
@@ -186,18 +203,19 @@ const AddCollection = (props) => {
   );
 };
 
-AddCollection.propTypes = {
+UpdateCollection.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
   data: PropTypes.object,
   setOpenModalCollection: PropTypes.func
 };
 
-AddCollection.defaultProps = {
+UpdateCollection.defaultProps = {
   open: false,
   setOpen: null,
   data: {},
+  editedData: {},
   setOpenModalCollection: null
 };
 
-export default AddCollection;
+export default UpdateCollection;

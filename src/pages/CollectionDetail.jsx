@@ -4,6 +4,7 @@
 import { jsx, css } from "@emotion/react";
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import UpdateCollection from "../components/Modals/UpdateCollection";
 import RemoveData from "../components/Modals/RemoveData";
 import PostCard from "../components/PostCard";
 import CollectionContext from "../context/collection";
@@ -25,6 +26,12 @@ const CollectionDetail = () => {
   const [data, setData] = useState(null);
   const [openModalRemoveCollection, setOpenModalRemoveCollection] =
     useState(false);
+
+  const [openModalEditCollection, setOpenModalEditCollection] = useState(false);
+
+  const [editedData, setEditedData] = useState({
+    name: ""
+  });
 
   const handleRemoveCollection = (e) => {
     const selectedData = detailData.posts.filter(
@@ -51,19 +58,32 @@ const CollectionDetail = () => {
   };
 
   useEffect(() => {
-    const selectedCollection = collectionData.filter(
-      (item) => item.slug === param.slug
-    );
+    const selectedCollection = dataPage();
 
     if (selectedCollection) {
       setDetailData(selectedCollection[0]);
     }
   }, [collectionData]);
 
+  const dataPage = () => {
+    return collectionData.filter((item) => item.slug === param.slug);
+  };
+
+  const handleEditCollection = (e) => {
+    const selectedData = dataPage();
+
+    setEditedData({
+      ...editedData,
+      name: selectedData[0].name
+    });
+    setOpenModalEditCollection(true);
+  };
+
   return (
     <div>
       <CenteredItem>
         <h1>{detailData?.name}</h1>
+        <Button onClick={handleEditCollection}>Edit Name Collection</Button>
       </CenteredItem>
       <hr />
       <br />
@@ -101,6 +121,12 @@ const CollectionDetail = () => {
       ) : (
         <h1>Tidak ada data</h1>
       )}
+      <UpdateCollection
+        variant="edit"
+        editedData={editedData}
+        open={openModalEditCollection}
+        setOpen={setOpenModalEditCollection}
+      />
       <RemoveData
         open={openModalRemoveCollection}
         setOpen={setOpenModalRemoveCollection}

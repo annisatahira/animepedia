@@ -13,7 +13,7 @@ import PostCard from "../components/PostCard";
 import { List } from "../parts/list";
 import { goToTopPage } from "../utils/helpers";
 import ListCollection from "../components/Modals/ListCollection";
-import AddCollection from "../components/Modals/AddCollection";
+import UpdateCollection from "../components/Modals/UpdateCollection";
 
 const ANIME_DETAIL_QUERY = gql`
   query ($id: Int) {
@@ -192,7 +192,7 @@ const PostDetail = () => {
         setopenAddToCollection={setopenAddToCollection}
       />
 
-      <AddCollection
+      <UpdateCollection
         open={openAddToCollection}
         setOpen={setopenAddToCollection}
         data={detail}

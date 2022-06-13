@@ -12,21 +12,25 @@ import { Card } from "../parts/card";
 import { CenteredItem } from "../parts/container";
 import { Image } from "../parts/image";
 import { LargeList } from "../parts/list";
-import AddCollection from "../components/Modals/AddCollection";
+import UpdateCollection from "../components/Modals/UpdateCollection";
 import RemoveData from "../components/Modals/RemoveData";
 
 const Collection = () => {
   const collectionData = useContext(CollectionContext).collectionData;
-  const setcollectionData = useContext(CollectionContext).setCollectionData;
   const [openModalAddCollection, setOpenModalAddCollection] = useState(false);
   const [openModalRemoveCollection, setOpenModalRemoveCollection] =
     useState(false);
+  const [openModalEditCollection, setOpenModalEditCollection] = useState(false);
 
   // state for save removed data
   const [removedData, setRemovedData] = useState(null);
 
   // state for save new data
   const [data, setData] = useState(null);
+
+  const [editedData, setEditedData] = useState({
+    name: ""
+  });
 
   const handleRemoveCollection = (e) => {
     const removedData = collectionData?.filter(
@@ -40,6 +44,14 @@ const Collection = () => {
     setRemovedData(removedData[0]);
     setData(notRemovedData);
     setOpenModalRemoveCollection(true);
+  };
+
+  const handleEditCollection = (e) => {
+    setEditedData({
+      ...editedData,
+      name: e.target.value
+    });
+    setOpenModalEditCollection(true);
   };
 
   return (
@@ -88,6 +100,18 @@ const Collection = () => {
                     >
                       X
                     </Button>
+                    <Button
+                      shape="circle"
+                      css={css`
+                        position: absolute;
+                        right: -1rem;
+                        top: 2rem;
+                      `}
+                      value={item.name}
+                      onClick={handleEditCollection}
+                    >
+                      E
+                    </Button>
                     <Link key={item.id} to={`/collection/${item.slug}`}>
                       <Image
                         css={css`
@@ -120,9 +144,15 @@ const Collection = () => {
           <h1>Create new one</h1>
         )}
       </CenteredItem>
-      <AddCollection
+      <UpdateCollection
         open={openModalAddCollection}
         setOpen={setOpenModalAddCollection}
+      />
+      <UpdateCollection
+        variant="edit"
+        editedData={editedData}
+        open={openModalEditCollection}
+        setOpen={setOpenModalEditCollection}
       />
       <RemoveData
         open={openModalRemoveCollection}
