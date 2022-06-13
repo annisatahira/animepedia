@@ -10,6 +10,8 @@ export const StyledInput = styled.input`
     outline: none;
     border: 1px solid teal;
   }
+
+  ${(props) => props.variant === "danger" && `border: 1px solid red;`};
 `;
 
 export const StyledForm = styled.form`

@@ -10,3 +10,9 @@ export const convertToSlug = (sentence) => {
     .replace(/ /g, "-")
     .replace(/[^\w-]+/g, "");
 };
+
+export const haveSpecialChar = (sentence) => {
+  const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+  return format.test(sentence);
+};

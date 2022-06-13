@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
@@ -13,6 +13,8 @@ import CollectionContext from "../../context/collection";
 import Input from "../Input";
 import { addNewCollection } from "../../utils/handler";
 import { toast, ToastContainer } from "react-toastify";
+import { haveSpecialChar } from "../../utils/helpers";
+import { TextFormStatus } from "../../parts/text";
 
 const customStyles = {
   overlay: {
@@ -35,31 +37,21 @@ const AddCollection = (props) => {
   const collectionData = useContext(CollectionContext).collectionData;
   const setCollectionData = useContext(CollectionContext).setCollectionData;
 
-  const [formValues, setFormValues] = useState({});
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-
-    const newData = {
-      name: formValues.name,
-      posts: Object.keys(data).length > 0 ? [data] : []
-    };
-
-    const formatData = addNewCollection(newData);
-
-    setCollectionData([...collectionData, { ...formatData }]);
-
-    setOpen(false);
-
-    setFormValues({});
-
-    if (setOpenModalCollection) {
-      setOpenModalCollection(false);
-    }
-
-    return toast.success("Hooray! It Saved", {
-      position: toast.POSITION.TOP_CENTER
+  useEffect(() => {
+    setFormValues({
+      name: ""
     });
-  };
+    setValidation({
+      name: ""
+    });
+  }, [open]);
+
+  const [formValues, setFormValues] = useState({
+    name: ""
+  });
+  const [validation, setValidation] = useState({
+    name: ""
+  });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -67,6 +59,59 @@ const AddCollection = (props) => {
       ...prevValues,
       [name]: value
     }));
+  };
+
+  const checkValidName = (name) => {
+    const isDuplicateName = collectionData.find(
+      (collection) => collection.name === formValues.name
+    );
+
+    if (isDuplicateName) {
+      return setValidation({
+        name: "collection name already exist, please create a new one"
+      });
+    }
+
+    if (haveSpecialChar(name)) {
+      return setValidation({
+        name: "collection name can't contain special character e.g: '@/#'"
+      });
+    }
+
+    return true;
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+
+    const validName = checkValidName(formValues.name);
+
+    if (validName) {
+      const newData = {
+        name: formValues.name,
+        posts: Object.keys(data).length > 0 ? [data] : []
+      };
+
+      const formatData = addNewCollection(newData);
+
+      setCollectionData([...collectionData, { ...formatData }]);
+
+      setOpen(false);
+      setFormValues({
+        name: ""
+      });
+      setValidation({
+        name: ""
+      });
+
+      if (setOpenModalCollection) {
+        setOpenModalCollection(false);
+      }
+
+      return toast.success("Hooray! It Saved", {
+        position: toast.POSITION.TOP_CENTER
+      });
+    }
   };
 
   return (
@@ -115,7 +160,15 @@ const AddCollection = (props) => {
               placeholder="Like 'Favorite Anime'"
               onChange={handleInputChange}
               value={formValues.name ? formValues.name : ""}
+              status={validation.name !== "" && "danger"}
             />
+            {validation.name !== "" && (
+              <small>
+                <TextFormStatus variant="danger">
+                  {validation.name}
+                </TextFormStatus>
+              </small>
+            )}
             <div
               css={css`
                 display: flex;

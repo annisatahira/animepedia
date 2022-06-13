@@ -5,7 +5,7 @@ import { jsx, css } from "@emotion/react";
 import { StyledInput } from "../parts/form";
 
 const Input = (props) => {
-  const { label } = props;
+  const { label, status } = props;
   return (
     <div
       css={css`
@@ -15,7 +15,7 @@ const Input = (props) => {
       `}
     >
       <span>{label}</span>
-      <StyledInput {...props} />
+      <StyledInput variant={status} autoComplete="off" {...props} />
     </div>
   );
 };
