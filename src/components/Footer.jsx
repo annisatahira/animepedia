@@ -30,7 +30,7 @@ const Footer = () => {
           padding: 1rem;
         `}
       >
-        build with Love
+        build with &hearts; by Annisa
       </h1>
     </footer>
   );
