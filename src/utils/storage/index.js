@@ -1,11 +1,5 @@
 class Storage {
-  constructor({ type, key, value }) {
-    this.type = type;
-    this.key = key;
-    this.value = value;
-  }
-
-  isStorageExist = () => {
+  static isStorageExist = () => {
     if (typeof Storage === undefined) {
       alert("Your browser does not support web storage API");
       return false;
@@ -13,15 +7,15 @@ class Storage {
     return true;
   };
 
-  setDataStorage() {
+  static setDataStorage({ type, key, value }) {
     if (this.isStorageExist()) {
-      const parsed = JSON.stringify(this.value);
-      this.type.setItem(this.key, parsed);
+      const parsed = JSON.stringify(value);
+      type.setItem(key, parsed);
     }
   }
 
-  getDataStorage() {
-    const serializedData = this.type.getItem(this.key);
+  static getDataStorage({ type, key }) {
+    const serializedData = type.getItem(key);
 
     if (serializedData) {
       let data = JSON.parse(serializedData);
@@ -31,7 +25,7 @@ class Storage {
       }
     }
 
-    return false;
+    return [];
   }
 }
 

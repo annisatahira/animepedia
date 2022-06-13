@@ -47,6 +47,8 @@ const RemoveData = (props) => {
     });
   };
 
+  console.log({ data, title });
+
   return (
     <>
       <Modal isOpen={open} contentLabel="Remove Data" style={customStyles}>
@@ -91,14 +93,14 @@ const RemoveData = (props) => {
 RemoveData.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
-  data: PropTypes.object,
+  data: PropTypes.array,
   setOpenModalCollection: PropTypes.func
 };
 
 RemoveData.defaultProps = {
   open: false,
   setOpen: null,
-  data: {},
+  data: [],
   setOpenModalCollection: null
 };
 

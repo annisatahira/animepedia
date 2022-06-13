@@ -4,24 +4,16 @@ import Storage from "../utils/storage";
 const CollectionContext = createContext();
 
 export const CollectionProvider = ({ children }) => {
-  const [collectionData, setCollectionData] = useState([]);
+  const [collectionData, setCollectionData] = useState(
+    Storage.getDataStorage({ type: localStorage, key: "data-collection" })
+  );
 
   useEffect(() => {
-    const collections = new Storage({
+    Storage.setDataStorage({
       type: localStorage,
       key: "data-collection",
       value: collectionData
     });
-
-    if (collectionData.length !== 0) {
-      collections.setDataStorage();
-    } else {
-      // check data from storage
-      const data = collections.getDataStorage();
-      if (data) {
-        setCollectionData(data);
-      }
-    }
   }, [collectionData]);
 
   console.log({ collectionData });

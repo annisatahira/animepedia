@@ -1,7 +1,7 @@
 /** @jsx jsx */
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { jsx, css } from "@emotion/react";
 import { useContext } from "react";
 import { IoImageOutline } from "react-icons/io5";
@@ -17,6 +17,7 @@ import RemoveData from "../components/Modals/RemoveData";
 
 const Collection = () => {
   const collectionData = useContext(CollectionContext).collectionData;
+  const setcollectionData = useContext(CollectionContext).setCollectionData;
   const [openModalAddCollection, setOpenModalAddCollection] = useState(false);
   const [openModalRemoveCollection, setOpenModalRemoveCollection] =
     useState(false);
@@ -28,15 +29,16 @@ const Collection = () => {
   const [data, setData] = useState(null);
 
   const handleRemoveCollection = (e) => {
-    const removedData = collectionData.filter(
+    const removedData = collectionData?.filter(
       (item) => item.id === e.target.value
     );
-    const notRemovedData = collectionData.filter(
+
+    const notRemovedData = collectionData?.filter(
       (item) => item.id !== e.target.value
     );
 
-    setData(notRemovedData);
     setRemovedData(removedData[0]);
+    setData(notRemovedData);
     setOpenModalRemoveCollection(true);
   };
 
@@ -60,7 +62,7 @@ const Collection = () => {
         </CenteredItem>
         <br />
         <br />
-        {collectionData.length > 0 ? (
+        {collectionData?.length > 0 ? (
           <LargeList>
             {collectionData?.map((item) => {
               return (
@@ -125,7 +127,7 @@ const Collection = () => {
       <RemoveData
         open={openModalRemoveCollection}
         setOpen={setOpenModalRemoveCollection}
-        data={data}
+        data={data ? data : {}}
         image={
           removedData?.posts?.length > 0
             ? removedData?.posts[0].coverImage?.large
