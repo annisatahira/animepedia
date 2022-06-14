@@ -38,6 +38,17 @@ const UpdateCollection = (props) => {
     }
   }, [editedData]);
 
+  useEffect(() => {
+    if (!open) {
+      setFormValues({
+        name: ""
+      });
+      setValidation({
+        name: ""
+      });
+    }
+  }, [open]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormValues((prevValues) => ({
@@ -106,8 +117,6 @@ const UpdateCollection = (props) => {
       if (setOpenModalCollection) {
         setOpenModalCollection(false);
       }
-
-      console.log("hi");
 
       toast.success("Hooray! It Updated", {
         position: toast.POSITION.TOP_CENTER,

@@ -31,7 +31,7 @@ const RemoveData = (props) => {
           <Card tw="w-72 h-72">
             <Image
               tw="rounded-lg h-72"
-              src={image ? image : "/images/bg-header.jpg"}
+              src={image ? image : "/images/empty-collection.png"}
             />
           </Card>
           <h1>{title}</h1>

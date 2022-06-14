@@ -4,7 +4,7 @@ import { breakPointMediaQuery } from "../utils/helpers";
 const mq = breakPointMediaQuery();
 
 export const TextFormStatus = styled.p`
-  padding-left: 1rem;
+  padding-left: 2rem;
   ${(props) => props.variant === "danger" && "color: red;"};
   ${(props) => props.variant === "success" && "color: teal;"};
 `;
