@@ -1,9 +1,7 @@
-/** @jsx jsx */
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import React, { useEffect } from "react";
+/** @jsxImportSource @emotion/react */
+import "twin.macro";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
-import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
 import { useContext, useState } from "react";
 import { StyledForm } from "../../parts/form";
@@ -12,13 +10,12 @@ import CollectionContext from "../../context/collection";
 import Input from "../Input";
 import { addNewCollection } from "../../utils/handler";
 import { toast } from "react-toastify";
-import { breakPointMediaQuery, haveSpecialChar } from "../../utils/helpers";
+import { haveSpecialChar } from "../../utils/helpers";
 import { TextFormStatus } from "../../parts/text";
 import { nanoid } from "nanoid";
 import ModalContainer from "./Container";
 
 const UpdateCollection = (props) => {
-  const mq = breakPointMediaQuery();
   const { open, setOpen, data, setOpenModalCollection, editedData, variant } =
     props;
   const collectionData = useContext(CollectionContext).collectionData;
@@ -40,6 +37,17 @@ const UpdateCollection = (props) => {
       });
     }
   }, [editedData]);
+
+  useEffect(() => {
+    if (!open) {
+      setFormValues({
+        name: ""
+      });
+      setValidation({
+        name: ""
+      });
+    }
+  }, [open]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -110,12 +118,12 @@ const UpdateCollection = (props) => {
         setOpenModalCollection(false);
       }
 
-      console.log("hi");
-
-      toast.success("Hooray! It Updated", {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: "success1"
-      });
+      toast.success(
+        variant === "edit" ? "Hooray! It Updated" : "Hooray! It Saved",
+        {
+          position: toast.POSITION.TOP_CENTER
+        }
+      );
     }
   };
 
@@ -130,11 +138,7 @@ const UpdateCollection = (props) => {
         <Button
           variant="danger"
           shape="circle"
-          css={css`
-            position: absolute;
-            right: 1.2rem;
-            top: 1.2rem;
-          `}
+          tw="absolute right-3 top-3"
           onClick={() => setOpen(false)}
         >
           X
@@ -145,18 +149,7 @@ const UpdateCollection = (props) => {
             ? "Edit this collection name"
             : "Create new collection and save this anime to that collection"}
         </p>
-        <div
-          css={css`
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            justify-content: center;
-
-            ${mq[2]} {
-              flex-direction: row;
-            }
-          `}
-        >
+        <div tw="flex flex-col w-full justify-center lg:flex-row">
           {data && Object.keys(data).length !== 0 && (
             <PostCard
               image={data?.coverImage?.large}
@@ -166,12 +159,7 @@ const UpdateCollection = (props) => {
             />
           )}
 
-          <StyledForm
-            css={css`
-              margin-top: 2rem;
-            `}
-            onSubmit={handleOnSubmit}
-          >
+          <StyledForm tw="mt-5" onSubmit={handleOnSubmit}>
             <Input
               label="Name"
               aria-label="name"
@@ -189,13 +177,7 @@ const UpdateCollection = (props) => {
                 </TextFormStatus>
               </small>
             )}
-            <div
-              css={css`
-                display: flex;
-                width: 100%;
-                justify-content: center;
-              `}
-            >
+            <div tw="flex w-full justify-center">
               <Button>Save</Button>
             </div>
           </StyledForm>
