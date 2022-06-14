@@ -39,3 +39,18 @@ export const BackgroundTitle = styled.div`
   color: #fff;
   border-radius: 0 0 10px 10px;
 `;
+
+export const SkeletonContainer = styled.div`
+  background-color: #e2e5e7;
+  width: 100%;
+  animation: shine 1s ease infinite;
+  border-radius: 0.5rem;
+  @keyframes shine {
+    0% {
+      background-color: hsl(200, 20%, 80%);
+    }
+    100% {
+      background-color: hsl(200, 20%, 95%);
+    }
+  }
+`;

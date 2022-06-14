@@ -14,6 +14,7 @@ import { Layout } from "../parts/container";
 import { Heading } from "../parts/text";
 import { useMediaPredicate } from "react-media-hook";
 import { ANIME_LIST_QUERY } from "../services/query";
+import Skeleton from "../components/Skeleton";
 
 const Home = () => {
   const biggerThan500 = useMediaPredicate("(min-width: 500px)");
@@ -45,14 +46,16 @@ const Home = () => {
     <Layout tw="relative w-full">
       <div tw="mx-auto">
         <Card tw="text-white p-1 bg-blue-900 leading-10 px-10 py-14">
-          <Heading tw="m-2 text-lg">Hello, Anime Lover</Heading>
+          <Heading tw="m-2 text-3xl">Hello, Anime Lover</Heading>
           <p tw="my-4 mx-2 text-xl">
             Discover anime and manga and save your favorite anime to your
             collection
           </p>
         </Card>
-        <Heading>Anime</Heading>
-        {!loading && (
+
+        <Heading tw="mt-12 mb-8 text-4xl">Anime</Heading>
+
+        {!loading ? (
           <>
             <List>
               {list?.map((anime) => (
@@ -67,6 +70,10 @@ const Home = () => {
               ))}
             </List>
           </>
+        ) : (
+          <List>
+            <Skeleton count={20} tw="h-80" />
+          </List>
         )}
         <StyledPaginateContainer>
           <ReactPaginate

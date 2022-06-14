@@ -11,7 +11,7 @@ export const Card = styled.div`
 
 export const CardHeader = styled.div`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
-  height: 400px;
-  border-radius: 20px;
+  height: 288px;
+  border-radius: 10px;
   background: #000;
 `;
