@@ -118,10 +118,12 @@ const UpdateCollection = (props) => {
         setOpenModalCollection(false);
       }
 
-      toast.success("Hooray! It Updated", {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: "success1"
-      });
+      toast.success(
+        variant === "edit" ? "Hooray! It Updated" : "Hooray! It Saved",
+        {
+          position: toast.POSITION.TOP_CENTER
+        }
+      );
     }
   };
 

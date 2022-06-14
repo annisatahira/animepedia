@@ -29,7 +29,7 @@ const ListCollection = (props) => {
 
     setOpen(false);
 
-    return toast.success("Hooray! It Saved, Look at 'My Collection' Now !", {
+    return toast.success("Hooray! It Saved to my collection", {
       position: toast.POSITION.TOP_CENTER
     });
   };
