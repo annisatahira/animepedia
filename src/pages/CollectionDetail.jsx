@@ -1,7 +1,4 @@
-/** @jsx jsx */
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx, css } from "@emotion/react";
+/** @jsxImportSource @emotion/react */
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import UpdateCollection from "../components/Modals/UpdateCollection";
@@ -12,6 +9,7 @@ import { Button } from "../parts/button";
 import { CenteredItem, Layout } from "../parts/container";
 import { List } from "../parts/list";
 import EmptyPage from "../components/EmptyPage";
+import "twin.macro";
 
 const CollectionDetail = () => {
   const param = useParams();
@@ -86,32 +84,19 @@ const CollectionDetail = () => {
         <h1>{detailData?.name}</h1>
         <Button onClick={handleEditCollection}>Edit Name Collection</Button>
       </CenteredItem>
-      <br />
-      <br />
-      <hr />
-      <br />
+      <hr tw="my-10" />
       {detailData?.posts?.length !== 0 ? (
         <List>
           {detailData?.posts?.map((item) => {
             return (
-              <div
-                key={item.ids}
-                css={css`
-                  position: relative;
-                  width: 100%;
-                `}
-              >
+              <div tw="relative w-full" key={item.ids}>
                 <Link to={`/anime/${item.id}`}>
                   <PostCard image={item.coverImage.large} />
                 </Link>
                 <Button
                   variant="danger"
                   shape="circle"
-                  css={css`
-                    position: absolute;
-                    right: -1rem;
-                    top: -1rem;
-                  `}
+                  tw="absolute -right-5 -top-5"
                   value={item.ids}
                   onClick={handleRemoveCollection}
                 >

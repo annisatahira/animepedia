@@ -1,8 +1,5 @@
-/** @jsx jsx */
-/** @jsxRuntime classic */
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import { jsx, css } from "@emotion/react";
 import { useContext } from "react";
 import { IoImageOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -15,12 +12,10 @@ import { LargeList } from "../parts/list";
 import UpdateCollection from "../components/Modals/UpdateCollection";
 import RemoveData from "../components/Modals/RemoveData";
 import { FiEdit2 } from "react-icons/fi";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import EmptyPage from "../components/EmptyPage";
-import { breakPointMediaQuery } from "../utils/helpers";
+import "twin.macro";
 
 const Collection = () => {
-  const mq = breakPointMediaQuery();
   const collectionData = useContext(CollectionContext).collectionData;
   const [openModalAddCollection, setOpenModalAddCollection] = useState(false);
   const [openModalRemoveCollection, setOpenModalRemoveCollection] =
@@ -36,8 +31,6 @@ const Collection = () => {
   const [editedData, setEditedData] = useState({
     name: ""
   });
-
-  const [openEditMenu, setOpenEditMenu] = useState(false);
 
   const handleRemoveCollection = (e) => {
     const removedData = collectionData?.filter(
@@ -61,23 +54,11 @@ const Collection = () => {
     setOpenModalEditCollection(true);
   };
 
-  const handleOpenEditMenu = () => {
-    if (openEditMenu) {
-      return setOpenEditMenu(false);
-    }
-
-    return setOpenEditMenu(true);
-  };
-
   return (
     <Layout>
       <CenteredItem>
-        <CenteredItem>
-          <IoImageOutline
-            css={css`
-              font-size: 62px;
-            `}
-          />
+        <CenteredItem tw="mb-12">
+          <IoImageOutline tw="text-7xl" />
           <h1>My Collection</h1>
           <Button
             onClick={() => {
@@ -87,88 +68,35 @@ const Collection = () => {
             + Create New Collection
           </Button>
         </CenteredItem>
-        <br />
-        <br />
         {collectionData?.length > 0 ? (
           <LargeList>
             {collectionData?.map((item) => {
               return (
                 <Card
                   key={item.id}
-                  css={css`
-                    width: 100%;
-                    height: 200px;
-                    background: #ddd;
-
-                    ${mq[0]} {
-                      width: 150px;
-                    }
-
-                    ${mq[1]} {
-                      width: 230px;
-                    }
-                  `}
+                  tw="w-full h-72 relative bg-gray-200 md:w-56 lg:w-80"
                 >
                   <Button
+                    variant="danger"
                     shape="circle"
-                    css={css`
-                      position: absolute;
-                      right: -1rem;
-                      top: -1rem;
-                    `}
+                    tw="absolute -right-5 -top-5"
                     value={item.id}
-                    onClick={handleOpenEditMenu}
+                    onClick={handleRemoveCollection}
                   >
-                    <BsThreeDotsVertical
-                      css={css`
-                        font-size: 12px;
-                      `}
-                    />
+                    X
                   </Button>
-                  <div
-                    css={css`
-                      position: absolute;
-                      right: 0rem;
-                      top: 4rem;
-                      display: ${openEditMenu ? "block" : "none"};
-                    `}
+                  <Button
+                    shape="circle"
+                    tw="absolute -right-5 top-12"
+                    value={item.name}
+                    onClick={handleEditCollection}
                   >
-                    <Button
-                      variant="danger"
-                      shape="circle"
-                      css={css`
-                        position: absolute;
-                        right: -1rem;
-                        top: -1rem;
-                      `}
-                      value={item.id}
-                      onClick={handleRemoveCollection}
-                    >
-                      X
-                    </Button>
-                    <Button
-                      shape="circle"
-                      css={css`
-                        position: absolute;
-                        right: -1rem;
-                        top: 3rem;
-                      `}
-                      value={item.name}
-                      onClick={handleEditCollection}
-                    >
-                      <FiEdit2
-                        css={css`
-                          font-size: 12px;
-                        `}
-                      />
-                    </Button>
-                  </div>
+                    <FiEdit2 tw="text-sm" />
+                  </Button>
+
                   <Link key={item.id} to={`/collection/${item.slug}`}>
                     <Image
-                      css={css`
-                        height: 150px;
-                        border-radius: 10px;
-                      `}
+                      tw="h-52 rounded-md"
                       src={
                         item.posts.length > 0
                           ? item.posts[0].coverImage?.large
@@ -176,15 +104,7 @@ const Collection = () => {
                       }
                       alt={item.name}
                     />
-                    <h1
-                      css={css`
-                        font-size: 18px;
-                        padding-left: 18px;
-                        color: #000;
-                      `}
-                    >
-                      {item.name}
-                    </h1>
+                    <h1 tw="text-2xl pl-8 text-black">{item.name}</h1>
                   </Link>
                 </Card>
               );

@@ -1,13 +1,10 @@
-/** @jsx jsx */
-/** @jsxRuntime classic */
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import { jsx, css } from "@emotion/react";
 import { Card, CardHeader } from "../parts/card";
 import { Image } from "../parts/image";
 import { Button } from "../parts/button";
 import { useParams } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import PostCard from "../components/PostCard";
 import { List } from "../parts/list";
@@ -16,41 +13,8 @@ import ListCollection from "../components/Modals/ListCollection";
 import UpdateCollection from "../components/Modals/UpdateCollection";
 import { Layout } from "../parts/container";
 import { Heading } from "../parts/text";
-
-const ANIME_DETAIL_QUERY = gql`
-  query ($id: Int) {
-    Media(id: $id, type: ANIME) {
-      id
-      coverImage {
-        large
-      }
-      bannerImage
-      averageScore
-      episodes
-      title {
-        native
-        romaji
-        english
-      }
-      description
-      characters {
-        edges {
-          node {
-            id
-            name {
-              full
-            }
-            image {
-              large
-            }
-          }
-        }
-      }
-      genres
-      meanScore
-    }
-  }
-`;
+import "twin.macro";
+import { ANIME_DETAIL_QUERY } from "../services/query";
 
 const PostDetail = () => {
   const param = useParams();
@@ -79,34 +43,13 @@ const PostDetail = () => {
     <Layout>
       <CardHeader>
         <Image
-          css={css`
-            border-radius: 10px;
-            height: 400px;
-            opacity: 0.6;
-          `}
+          tw="rounded-md h-full opacity-60"
           src={detail?.bannerImage}
           alt=""
         />
       </CardHeader>
-      <div
-        css={css`
-          display: flex;
-          flex-direction: column;
-
-          ${mq[1]} {
-            flex-direction: row;
-          }
-        `}
-      >
-        <div
-          css={css`
-            margin: -6rem 4rem 2rem 4rem;
-
-            ${mq[1]} {
-              margin-left: 4rem;
-            }
-          `}
-        >
+      <div tw="flex flex-col lg:flex-row">
+        <div tw="-mt-20 mx-28 mb-4 lg:ml-10 lg:mx-10">
           <PostCard
             image={detail?.coverImage.large}
             title={detail?.title.romaji}
@@ -114,34 +57,10 @@ const PostDetail = () => {
             episodes={detail?.episodes}
           />
         </div>
-        <div
-          css={css`
-            ${mq[1]} {
-              width: 60%;
-            }
-          `}
-        >
-          <Heading
-            css={css`
-              ${mq[1]} {
-                margin-bottom: 0;
-              }
-            `}
-          >
-            {detail?.title.romaji}
-          </Heading>
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-
-              ${mq[1]} {
-                flex-direction: row;
-                justify-content: space-between;
-              }
-            `}
-          >
-            <h2 css={css``}>
+        <div tw="w-full mr-10 lg:w-3/5">
+          <Heading tw="mb-4">{detail?.title.romaji}</Heading>
+          <div tw="flex flex-col lg:flex-row justify-between">
+            <h2>
               Genre:{" "}
               {detail?.genres.map((genre, index) => {
                 return (
@@ -155,10 +74,7 @@ const PostDetail = () => {
             <h2>User Score: {detail?.meanScore}</h2>
           </div>
           <div
-            css={css`
-              margin-bottom: 3rem;
-              width: 100%;
-            `}
+            tw="mb-4 w-full"
             dangerouslySetInnerHTML={{
               __html: detail?.description.replaceAll("<br>", "<br/>")
             }}
@@ -172,29 +88,13 @@ const PostDetail = () => {
           <List>
             {detail?.characters.edges.map((char, index) => {
               return (
-                <Card
-                  key={index}
-                  css={css`
-                    background: #ddd;
-                    width: 100%;
-                  `}
-                >
+                <Card key={index} tw="bg-gray-200 w-full">
                   <Image
-                    css={css`
-                      border-radius: 10px;
-                      height: 200px;
-                    `}
+                    tw="rounded-md h-72"
                     src={char.node.image.large}
                     alt={char.node.name.full}
                   />
-                  <h1
-                    css={css`
-                      padding: 0 0.5rem;
-                      font-size: 12px;
-                    `}
-                  >
-                    {char.node.name.full}
-                  </h1>
+                  <h1 tw="py-0 px-4 text-lg">{char.node.name.full}</h1>
                 </Card>
               );
             })}
