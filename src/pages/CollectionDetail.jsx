@@ -91,7 +91,12 @@ const CollectionDetail = () => {
             return (
               <div tw="relative w-full" key={item.ids}>
                 <Link to={`/anime/${item.id}`}>
-                  <PostCard image={item.coverImage.large} />
+                  <PostCard
+                    title={item.title.romaji}
+                    image={item.coverImage.large}
+                    score={item.averageScore}
+                    episodes={item.episodes}
+                  />
                 </Link>
                 <Button
                   variant="danger"

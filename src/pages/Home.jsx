@@ -15,6 +15,7 @@ import { Heading } from "../parts/text";
 import { useMediaPredicate } from "react-media-hook";
 import { ANIME_LIST_QUERY } from "../services/query";
 import Skeleton from "../components/Skeleton";
+import ErrorPage from "./ErrorPage";
 
 const Home = () => {
   const biggerThan500 = useMediaPredicate("(min-width: 500px)");
@@ -42,6 +43,8 @@ const Home = () => {
     goToTopPage();
   };
 
+  if (error) return <ErrorPage />;
+
   return (
     <Layout tw="relative w-full">
       <div tw="mx-auto">
@@ -52,7 +55,6 @@ const Home = () => {
             collection
           </p>
         </Card>
-
         <Heading tw="mt-12 mb-8 text-4xl">Anime</Heading>
 
         {!loading ? (

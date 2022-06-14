@@ -16,6 +16,7 @@ import { Heading } from "../parts/text";
 import "twin.macro";
 import { ANIME_DETAIL_QUERY } from "../services/query";
 import Skeleton from "../components/Skeleton";
+import ErrorPage from "./ErrorPage";
 
 const PostDetail = () => {
   const param = useParams();
@@ -38,6 +39,8 @@ const PostDetail = () => {
       setDetail(data?.Media);
     }
   }, [data]);
+
+  if (error) return <ErrorPage />;
 
   return (
     <Layout>
