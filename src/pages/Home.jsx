@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import "twin.macro";
 import { Link } from "react-router-dom";
 import PostCard from "../components/PostCard";
 import { useQuery } from "@apollo/client";
@@ -13,7 +14,6 @@ import { Layout } from "../parts/container";
 import { Heading } from "../parts/text";
 import { useMediaPredicate } from "react-media-hook";
 import { ANIME_LIST_QUERY } from "../services/query";
-import "twin.macro";
 
 const Home = () => {
   const biggerThan500 = useMediaPredicate("(min-width: 500px)");
@@ -45,8 +45,8 @@ const Home = () => {
     <Layout tw="relative w-full">
       <div tw="mx-auto">
         <Card tw="text-white p-1 bg-blue-900 leading-10 px-10 py-14">
-          <Heading tw="m-1">Hello, Anime Lover</Heading>
-          <p tw="my-4 mx-1 text-xl">
+          <Heading tw="m-2 text-lg">Hello, Anime Lover</Heading>
+          <p tw="my-4 mx-2 text-xl">
             Discover anime and manga and save your favorite anime to your
             collection
           </p>

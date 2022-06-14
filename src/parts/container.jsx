@@ -14,10 +14,6 @@ export const Layout = styled.div`
   }
 `;
 
-export const Container = styled.div`
-  margin: 0 4rem;
-`;
-
 export const CenteredItem = styled.div`
   display: flex;
   align-items: center;
@@ -28,4 +24,18 @@ export const CenteredItem = styled.div`
 export const MainLayout = styled.div`
   position: relative;
   min-height: 100vh;
+`;
+
+export const BackgroundTitle = styled.div`
+  position: absolute;
+  padding: 10px;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  background-image: url("/images/bg-title.webp");
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: #fff;
+  border-radius: 0 0 10px 10px;
 `;

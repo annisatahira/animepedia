@@ -1,9 +1,6 @@
-/** @jsx jsx */
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import "twin.macro";
 import PropTypes from "prop-types";
-import { jsx, css } from "@emotion/react";
 import { Button } from "../../parts/button";
 import { useContext } from "react";
 import CollectionContext from "../../context/collection";
@@ -31,17 +28,9 @@ const RemoveData = (props) => {
     <>
       <ModalContainer isOpen={open} contentLabel="Remove Data">
         <CenteredItem>
-          <Card
-            css={css`
-              width: 250px;
-              height: 200px;
-            `}
-          >
+          <Card tw="w-72 h-72">
             <Image
-              css={css`
-                border-radius: 10px;
-                height: 200px;
-              `}
+              tw="rounded-lg h-72"
               src={image ? image : "/images/bg-header.jpg"}
             />
           </Card>
@@ -50,9 +39,7 @@ const RemoveData = (props) => {
           <div>
             <Button
               variant="secondary"
-              css={css`
-                margin-right: 20px;
-              `}
+              tw="mr-6"
               onClick={() => setOpen(false)}
             >
               Cancel

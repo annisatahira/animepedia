@@ -1,8 +1,5 @@
-/** @jsx jsx */
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import React from "react";
-import { jsx, css } from "@emotion/react";
+/** @jsxImportSource @emotion/react */
+import "twin.macro";
 import { Button } from "../../parts/button";
 import { IoImagesOutline } from "react-icons/io5";
 import ModalContainer from "./Container";
@@ -42,75 +39,27 @@ const ListCollection = (props) => {
         <Button
           variant="danger"
           shape="circle"
-          css={css`
-            position: absolute;
-            right: 1.2rem;
-            top: 1.2rem;
-          `}
+          tw="absolute right-3 top-3"
           onClick={() => setOpen(false)}
         >
           X
         </Button>
         <h1>Anime Collection</h1>
-        <p
-          css={css`
-            padding-bottom: 1rem;
-          `}
-        >
-          Your list anime collection
-        </p>
+        <p tw="pb-4">Your list anime collection</p>
 
-        <ul
-          css={css`
-            max-height: 260px;
-            overflow: auto;
-            padding-left: 0;
-          `}
-        >
+        <ul tw="max-h-64 overflow-auto pl-0">
           {collectionData.length !== 0 ? (
             collectionData.map((item) => {
               return (
                 <li
                   key={item.id}
                   data-id={item.id}
-                  css={css`
-                    cursor: pointer;
-                    margin-right: 10px;
-                    &:hover {
-                      background-color: #ddd;
-                      border-radius: 10px;
-                    }
-                  `}
+                  tw="cursor-pointer mr-5 hover:bg-gray-200 hover:rounded-xl"
                 >
-                  <div
-                    css={css`
-                      display: flex;
-                      border-radius: 10px;
-                      padding: 10px;
-                      justify-content: space-between;
-                      align-items: center;
-                    `}
-                  >
-                    <div
-                      css={css`
-                        display: flex;
-                        align-items: center;
-                        padding: 1rem 0.5rem;
-                      `}
-                    >
-                      <IoImagesOutline
-                        css={css`
-                          font-size: 32px;
-                        `}
-                      />
-                      <h1
-                        css={css`
-                          font-size: 16px;
-                          margin-left: 15px;
-                        `}
-                      >
-                        {item.name}
-                      </h1>
+                  <div tw="flex rounded-lg p-4 justify-between items-center">
+                    <div tw="flex items-center py-4 px-2">
+                      <IoImagesOutline tw="text-5xl" />
+                      <h1 tw="text-lg ml-5">{item.name}</h1>
                     </div>
                     <Button value={item.id} onClick={handleSelectedCollection}>
                       Save
@@ -126,12 +75,7 @@ const ListCollection = (props) => {
             />
           )}
         </ul>
-        <Button
-          css={css`
-            margin-top: 3rem;
-          `}
-          onClick={() => setopenAddToCollection(true)}
-        >
+        <Button tw="mt-6" onClick={() => setopenAddToCollection(true)}>
           + Add New Collection
         </Button>
       </ModalContainer>

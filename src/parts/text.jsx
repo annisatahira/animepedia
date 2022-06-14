@@ -10,8 +10,8 @@ export const TextFormStatus = styled.p`
 `;
 
 export const Heading = styled.h1`
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   ${mq[1]} {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
   }
 `;

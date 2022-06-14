@@ -8,7 +8,7 @@ import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import PostCard from "../components/PostCard";
 import { List } from "../parts/list";
-import { breakPointMediaQuery, goToTopPage } from "../utils/helpers";
+import { goToTopPage } from "../utils/helpers";
 import ListCollection from "../components/Modals/ListCollection";
 import UpdateCollection from "../components/Modals/UpdateCollection";
 import { Layout } from "../parts/container";
@@ -18,7 +18,6 @@ import { ANIME_DETAIL_QUERY } from "../services/query";
 
 const PostDetail = () => {
   const param = useParams();
-  const mq = breakPointMediaQuery();
 
   const { data, loading, error } = useQuery(ANIME_DETAIL_QUERY, {
     variables: {
